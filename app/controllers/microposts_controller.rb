@@ -8,7 +8,7 @@ before_action :correct_user, only: [:destroy]
       flash[:success] = 'メッセージを投稿しました。'
       redirect_to root_url
     else
-      @microposts = current_user.microposts.order(id: :desc).page(params[:page])
+      @microposts = current_user.feed_microposts.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'メッセージの投稿に失敗しました。'
       render 'toppages/index'
     end
