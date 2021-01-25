@@ -30,4 +30,25 @@ class User < ApplicationRecord
     def feed_microposts
         Micropost.where(user_id: self.following_ids + [self.id])
     end
+    
+    has_many :favorites
+    has_many :user_favorites, through: :favorites, source: :micropost
+    has_many :reverses_of_favorites, class_name: 'Favorite', source: :user
+    
+    def favorite(micropost)
+        self.favorites.find_or_create_by(micropost_id: micropost.id)
+    end
+    
+    def unfavorite(micropost)
+        favorite = self.favorites.find_by(micropost_id: micropost.id)
+        favorite.destroy if favorite
+    end
+    
+    def already_favorites?(micropost)
+        self.user_favorites.include?(micropost)
+    end
+    
+    def feed_favorites
+        Micropost.where(micropost_id: self.user_favorites_ids + [self.id])
+    end
 end
