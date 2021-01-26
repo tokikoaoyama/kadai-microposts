@@ -13,6 +13,8 @@
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="dropdown-item"><%= link_to 'My Profile', user_path(current_user) %></li>
                             <li class="dropdown-divider"></li>
+                            <li class="dropdown-item"><%= link_to 'My Favorites', likes_user_path(current_user) %></li>
+                            <li class="dropdown-divider"></li>
                             <li class="dropdown-item"><%= link_to 'Logout', logout_path, method: :delete %></li>
                         </ul>
                     </li>
